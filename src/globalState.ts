@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 
 enum GlobalStateKeys {
-    ActiveMenu = 'activeMenu',
+    Header = 'header',
     Layout = 'layout',
     Language = 'language',
 }
@@ -40,7 +40,7 @@ function useGlobalState<T>(key: GlobalStateKeys, initialData: T): [T, (newValue:
 }
 
 function useLayout() :'sidebar'|'topBar'{
-    const [layout] = useGlobalState<'sidebar'|'topBar'>( GlobalStateKeys.Language, 'sidebar');
+    const [layout] = useGlobalState<'sidebar'|'topBar'>( GlobalStateKeys.Layout, 'sidebar');
     return layout;
 }
 
