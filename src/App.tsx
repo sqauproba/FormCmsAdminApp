@@ -14,6 +14,7 @@ import {GlobalStateKeys, useGlobalState} from "./globalState";
 import {TopBarLayout} from "./layout/topbar/TopBarLayout";
 import {
     AuthRouter,
+    setActivityBaseUrl,
     setAuditLogBaseUrl,
     setAuthApiBaseUrl,
     setCmsApiBaseUrl,
@@ -24,13 +25,14 @@ axios.defaults.withCredentials = true
 setCmsApiBaseUrl(configs.apiURL)
 setAuditLogBaseUrl(configs.apiURL)
 setAuthApiBaseUrl(configs.apiURL)
+setActivityBaseUrl(configs.apiURL)
 
 function App() {
     const {data} = useUserInfo();
     const [layout, _] = useGlobalState<string>(GlobalStateKeys.Layout, 'sidebar');
     const AuthRouterComponent = () => (
         <AuthRouter
-            baseRouter={configs.authRouterPrefix}
+            baseRouter={configs.routerPrefix +"/auth"}
             LoginPage={LoginPage}
             RegisterPage={RegisterPage}
         />
@@ -39,7 +41,7 @@ function App() {
     return data
         ? (layout === 'sidebar' ? <SidebarLayout/> : <TopBarLayout/>)
         : <Routes>
-            <Route path={`${configs.authRouterPrefix}/*`} element={<AuthRouterComponent/>}/>
+            <Route path={`${configs.routerPrefix}/auth/*`} element={<AuthRouterComponent/>}/>
             <Route path="*" element={<AuthRouterComponent/>}/>
         </Routes>
 }
